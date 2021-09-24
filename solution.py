@@ -7,7 +7,7 @@ import sys
 def webServer(port=13331):
   serverSocket = socket(AF_INET, SOCK_STREAM)
   #Prepare a server socket
-  serverSocket.bind(("", port))
+  serverSocket.bind(("127.0.0.1", port))
   serverSocket.listen()
 
   while True:
@@ -16,14 +16,14 @@ def webServer(port=13331):
     try:
 
       try:
-        message = connectionSocket.recv(2048)
+        message = connectionSocket.recv(1024)
         filename = message.split()[1]
         f = open(filename[1:])
         outputdata = f.read()
 
         #Send one HTTP header line into socket.
         #Fill in start
-        connectionSocket.send("GET /helloworld.html HTTP/1.1 200 0K\r\n".encode())
+        connectionSocket.send("GET /helloworld.html HTTP/1.1 200 OK\r\n".encode())
         #Fill in end
 
         #Send the content of the requested file to the client
