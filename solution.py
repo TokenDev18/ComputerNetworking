@@ -23,7 +23,7 @@ def webServer(port=13331):
 
         #Send one HTTP header line into socket.
         #Fill in start
-        connectionSocket.sendall(b"HEAD / HTTP/1.1 200 0K\r\nAccept: text/html\r\n\r\n")
+        connectionSocket.send("HEAD / GET /helloworld.html HTTP/1.1 200 0K\r\n".encode())
         #Fill in end
 
         #Send the content of the requested file to the client
