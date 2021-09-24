@@ -1,6 +1,5 @@
 # import socket module
 from socket import *
-import http.server
 # In order to terminate the program
 import sys
 
@@ -8,7 +7,7 @@ import sys
 def webServer(port=13331):
   serverSocket = socket(AF_INET, SOCK_STREAM)
   #Prepare a server socket
-  serverSocket.bind(("127.0.0.1", port))
+  serverSocket.bind(("", port))
   serverSocket.listen()
 
   while True:
@@ -25,7 +24,9 @@ def webServer(port=13331):
         #Send one HTTP header line into socket.
         #Fill in start
         #http_message = "HTTP/1.1 200 OK GET /helloworld.html"
+        connectionSocket.connect(("127.0.0.1", 1331))
         connectionSocket.sendall(b"HEAD / HTTP/1.1 \r\nGET /helloworld.htlm \r\nAccept: text/html\r\n\r\n")
+        connectionSocket.recv(1024)
         #connectionSocket.sendall(file_message.encode())
         #connectionSocket.send('HTTP/1.1 200 OK\r\n'.encode())
         #Fill in end
