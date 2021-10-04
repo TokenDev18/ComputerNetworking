@@ -16,7 +16,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     #print(recv)
 
     if recv[:3] != '220':
-        print('220 reply not received from server.')
+        #print('220 reply not received from server.')
 
     # Send HELO command and print server response.
     heloCommand = "HELO email-smtp.us-east-2.amazonaws.com\r\n"
@@ -24,7 +24,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     helo_recv = clientSocket.recv(1024).decode()
     #print(helo_recv)
     if helo_recv[:3] != '250':
-        print('250 reply not received from server.')
+        #print('250 reply not received from server.')
 
     # Send MAIL FROM command and print server response.
     # Fill in start
