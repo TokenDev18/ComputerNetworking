@@ -5,6 +5,7 @@ import struct
 import time
 import select
 import binascii
+import statistics
 # Should use stdev
 
 ICMP_ECHO_REQUEST = 8
@@ -54,6 +55,9 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
             'bbHHh', icmp_header)    
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
+        if type == 0:
+            delay = timeReceived - startedSelect * 1000 #delay time in miliseconds
+            return delay
         if timeLeft <= 0:
             return "Request timed out."
 
@@ -76,7 +80,6 @@ def sendOnePing(mySocket, destAddr, ID):
         myChecksum = htons(myChecksum) & 0xffff
     else:
         myChecksum = htons(myChecksum)
-
 
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)
     packet = header + data
@@ -103,17 +106,26 @@ def doOnePing(destAddr, timeout):
 
 def ping(host, timeout=1):
     # timeout=1 means: If one second goes by without a reply from the server,  	# the client assumes that either the client's ping or the server's pong is lost
+    packet_min, packet_avg, packet_max, stdev_var = 0,0,0,0
+    delay_list = []
     dest = gethostbyname(host)
-    #print("Pinging " + dest + " using Python:")
-    #print("")
+    print("Pinging " + dest + " using Python:")
+    print("")
     # Calculate vars values and return them
-    #  vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+    
     # Send ping requests to a server separated by approximately one second
     for i in range(0,4):
         delay = doOnePing(dest, timeout)
-        #print(delay)
+        delay_list.append(delay)
         time.sleep(1)  # one second
 
+    packet_min = min(delay_list)
+    packet_max = max(delay_list)
+    packet_avg = sum(delay_list)/len(delay_list)
+
+    stdev_var = statistics.stdev(delay_list)
+
+    vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev_var, 2))]
     return vars
 
 if __name__ == '__main__':
