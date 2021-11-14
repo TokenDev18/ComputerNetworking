@@ -115,12 +115,11 @@ def get_route(hostname):
                 types = type
                 #Fill in end
                 try: #try to fetch the hostname
-                    host_name = gethostname()
+                    host_name = gethostbyaddr(addr[0])
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
-                    if host_name == '':
-                        host_name = "hostname not returnable"
+                    host_name = "hostname not returnable"
                     #Fill in end
 
                 if types == 11:
@@ -141,7 +140,7 @@ def get_route(hostname):
                     #You should add your responses to your lists here 
                     tracelist2.append(ttl)
                     tracelist2.append(rtt)
-                    tracelist2.append(destAddr)
+                    tracelist2.append(addr[0])
                     tracelist2.append(host_name)
                     #Fill in end
                 elif types == 0:
@@ -151,7 +150,7 @@ def get_route(hostname):
                     #You should add your responses to your lists here and return your list if your destination IP is met
                     tracelist2.append(ttl)
                     tracelist2.append(rtt)
-                    tracelist2.append(destAddr)
+                    tracelist2.append(addr[0])
                     tracelist2.append(host_name)
                     #Fill in end
                 else:
@@ -160,7 +159,7 @@ def get_route(hostname):
                     trace_msg = "host not returnable"
                     tracelist2.append(ttl)
                     tracelist2.append(rtt)
-                    tracelist2.append(destAddr)
+                    tracelist2.append(addr[0])
                     tracelist2.append(trace_msg)
                     #Fill in end
                     break
@@ -168,7 +167,8 @@ def get_route(hostname):
                 mySocket.close()
     tracelist1.append(tracelist2)
     return tracelist1
-          
+#if __name__ == '__main__':
+    #get_route('espn.com')         
         
 
 
