@@ -167,9 +167,6 @@ def get_route(hostname):
             finally:
                 mySocket.close()
     tracelist1.append(tracelist2)
-    
-if __name__ == "__main__":
-    get_route("google.com")
           
         
 
