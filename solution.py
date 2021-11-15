@@ -90,16 +90,18 @@ def get_route(hostname):
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
                     #You should add the list above to your all traces list
+                    tracelist2.append(tracelist1)
                     #Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
                 timeReceived = time.time()
-                rtt = int((timeReceived - startedSelect) * 1000) #round trip time
+                rtt = int((timeReceived - t) * 1000) #round trip time
                 rtt = str(rtt) + "ms"
                 timeLeft = timeLeft - howLongInSelect
                 if timeLeft <= 0:
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
                     #You should add the list above to your all traces list
+                    tracelist2.append(tracelist1)
                     #Fill in end
             except timeout:
                 continue
@@ -127,39 +129,47 @@ def get_route(hostname):
                     bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
-                    type_msg = "Request timed out"
-                    tracelist1.append(ttl)
-                    tracelist1.append("*")
-                    tracelist1.append(type_msg)
+                    tracelist1 = [ttl,rtt,addr[0],host_name]
+                    tracelist2.append(tracelist1)
+                    #tracelist1.append(ttl)
+                    #tracelist1.append(rtt)
+                    #tracelist1.append(addr[0])
+                    #tracelist1.append(host_name)
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here 
-                    tracelist1.append(ttl)
-                    tracelist1.append(rtt)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(host_name)
+                    tracelist1 = [ttl,rtt,addr[0],host_name]
+                    tracelist2.append(tracelist1)
+                    #tracelist1.append(ttl)
+                    #tracelist1.append(rtt)
+                    #tracelist1.append(addr[0])
+                    #tracelist1.append(host_name)
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here and return your list if your destination IP is met
-                    tracelist1.append(ttl)
-                    tracelist1.append(rtt)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(host_name)
+                    tracelist1 = [ttl,rtt,addr[0],host_name]
+                    tracelist2.append(tracelist1)
+                    #tracelist1.append(ttl)
+                    #tracelist1.append(rtt)
+                    #tracelist1.append(addr[0])
+                    #tracelist1.append(host_name)
                     #Fill in end
                 else:
                     #Fill in start
                     #If there is an exception/error to your if statements, you should append that to your list here
                     trace_msg = "host not returnable"
-                    tracelist1.append(ttl)
-                    tracelist1.append(rtt)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(trace_msg)
+                    tracelist1 = [trace_msg]
+                    tracelist2.append(tracelist1)
+                    #tracelist1.append(ttl)
+                    #tracelist1.append(rtt)
+                    #tracelist1.append(addr[0])
+                    #tracelist1.append(trace_msg)
                     #Fill in end
                     break
             finally:
