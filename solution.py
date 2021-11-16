@@ -79,6 +79,9 @@ def get_route(hostname):
 
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
             mySocket.settimeout(TIMEOUT)
+
+            ttl = str(ttl)
+
             try:
                 d = build_packet()
                 mySocket.sendto(d, (hostname, 0))
@@ -129,6 +132,7 @@ def get_route(hostname):
                     bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
+
                     tracelist1 = [ttl,rtt,addr[0],host_name]
                     tracelist2.append(tracelist1)
                     #Fill in end
@@ -159,7 +163,6 @@ def get_route(hostname):
             finally:
                 mySocket.close()
     tracelist2.append(tracelist1)
-    print(tracelist2)
     return tracelist2
 if __name__ == '__main__':
     get_route('google.com')         
