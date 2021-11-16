@@ -131,10 +131,6 @@ def get_route(hostname):
                     #You should add your responses to your lists here
                     tracelist1 = [ttl,rtt,addr[0],host_name]
                     tracelist2.append(tracelist1)
-                    #tracelist1.append(ttl)
-                    #tracelist1.append(rtt)
-                    #tracelist1.append(addr[0])
-                    #tracelist1.append(host_name)
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
@@ -143,10 +139,6 @@ def get_route(hostname):
                     #You should add your responses to your lists here 
                     tracelist1 = [ttl,rtt,addr[0],host_name]
                     tracelist2.append(tracelist1)
-                    #tracelist1.append(ttl)
-                    #tracelist1.append(rtt)
-                    #tracelist1.append(addr[0])
-                    #tracelist1.append(host_name)
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -155,10 +147,6 @@ def get_route(hostname):
                     #You should add your responses to your lists here and return your list if your destination IP is met
                     tracelist1 = [ttl,rtt,addr[0],host_name]
                     tracelist2.append(tracelist1)
-                    #tracelist1.append(ttl)
-                    #tracelist1.append(rtt)
-                    #tracelist1.append(addr[0])
-                    #tracelist1.append(host_name)
                     #Fill in end
                 else:
                     #Fill in start
@@ -166,18 +154,15 @@ def get_route(hostname):
                     trace_msg = "host not returnable"
                     tracelist1 = [trace_msg]
                     tracelist2.append(tracelist1)
-                    #tracelist1.append(ttl)
-                    #tracelist1.append(rtt)
-                    #tracelist1.append(addr[0])
-                    #tracelist1.append(trace_msg)
                     #Fill in end
                     break
             finally:
                 mySocket.close()
     tracelist2.append(tracelist1)
+    print(tracelist2)
     return tracelist2
 if __name__ == '__main__':
-    get_route('espn.com')         
+    get_route('google.com')         
         
 
 
